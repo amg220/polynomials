@@ -38,11 +38,12 @@ class Polynomial:
         
         elif isinstance(other, Number):
             
-            return Polynomial((self.coefficients[o] + other,) + self.coefficients[1:])
+            return Polynomial((self.coefficients[o] + other,) 
+            + self.coefficients[1:])
 
         else:
             return NotImplemented
-            
+
         def __radd__(self, other):
 
             return self + other 
