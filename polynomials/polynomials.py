@@ -38,7 +38,7 @@ class Polynomial:
         
         elif isinstance(other, Number):
             
-            return Polynomial((self.coefficients[o] + other,) 
+            return Polynomial((self.coefficients[0] + other,) 
             + self.coefficients[1:])
 
         else:
