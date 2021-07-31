@@ -30,7 +30,7 @@ class Polynomial:
     def __add__(self, other):
 
         if isinstance(other, Polynomial):    
-            common = min(self.degree, other.degree()) + 1 
+            common = min(self.degree(), other.degree()) + 1 
             coefs = tuple(a + b for a, b in zip(self.coefficients, other.coefficients))
             coefs += self.coefficients[common:] + other.coefficients[common:]
             
