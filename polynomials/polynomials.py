@@ -35,7 +35,6 @@ class Polynomial:
             coefs = tuple(a + b for a, b in zip(self.coefficients,
                           other.coefficients))
             coefs += self.coefficients[common:] + other.coefficients[common:]
-
             return Polynomial(coefs)
 
         elif isinstance(other, Number):
