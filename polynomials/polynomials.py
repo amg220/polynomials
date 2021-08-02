@@ -10,7 +10,7 @@ class Polynomial:
     def coefficients(self):
 
         return self.__coefficients
-    
+
     @coefficients.setter
     def coefficients(self, value):
 
@@ -19,7 +19,6 @@ class Polynomial:
         while not value[i - 1] and i - 1 and i:
             i -= 1
         self.__coefficients = value[:i]
-
 
     def degree(self):
 
@@ -69,7 +68,8 @@ class Polynomial:
         if isinstance(other, Polynomial):
             total = Polynomial((0,))
             for n, c in enumerate(self.coefficients):
-                total += Polynomial(tuple(0 for i in range(n)) + tuple(c*v for v in other.coefficients))
+                total += Polynomial(tuple(0 for i in range(n)) +
+                                    tuple(c*v for v in other.coefficients))
             return total
 
         elif isinstance(other, Number):
@@ -98,12 +98,12 @@ class Polynomial:
             degdif = self.degree() - other.degree()
             a = other.coefficients[-1]
             quotient = []
-            while  rem.degree() >= other.degree() and other.degree():
+            while rem.degree() >= other.degree() and other.degree():
                 quotient.append(rem.coefficients[-1] / a)
-                rem -= (rem.coefficients[-1] / a) * Polynomial(tuple(0 for j in range(degdif + 1 - i)) + (1,)) * other
+                rem -= ((rem.coefficients[-1] / a) *Polynomial(tuple(0 for j in range(degdif + 1 - i)) + (1,)) * other)
                 i += 1
             return Polynomial(tuple(reversed(quotient))) or Polynomial((0,))
-        
+
         elif isinstance(other, Number):
             return self * (1 / other)
 
@@ -125,32 +125,30 @@ class Polynomial:
             for i in range(other):
                 ev *= self
             return ev
-        
+
         else:
             return NotImplemented
-    
-
 
     def __call__(self, x):
 
         if isinstance(x, (Number, Polynomial)):
             ev = self.coefficients[0]
             d = self.degree()
-            for i, c in enumerate(reversed(self.coefficients[1:])):
-                ev += c * (x ** (d - i))
+            for i, c in enumerate(self.coefficients[1:]):
+                ev += c * (x ** d)
             return ev
 
         else:
             return NotImplemented
 
-
     def diff(self, x=None):
-        
-        dp = Polynomial(tuple(c*d for c, d in enumerate(self.coefficients[1:], start=1)))
-        
-        if x == None:
+
+        dp = Polynomial(tuple(c*d for c, d in
+                        enumerate(self.coefficients[1:], start=1)))
+
+        if x is None:
             return dp
-        
+
         elif isinstance(x, (Number, Polynomial)):
             return dp(x)
 
@@ -159,10 +157,10 @@ class Polynomial:
 
     def integrate(pol, bounds):
 
-        P = Polynomial( (0,) + tuple(c/(d) for d, c in enumerate(pol.coefficients, start=1)))
+        P = Polynomial((0,) + tuple(c/(d) for d, c in
+                       enumerate(pol.coefficients, start=1)))
         if isinstance(bounds[0], Number) and isinstance(bounds[1], Number):
             return P(bounds[1]) - P(bounds[0])
 
         else:
             return NotImplemented
-
